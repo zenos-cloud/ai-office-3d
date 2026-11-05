@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Xem trực tiếp · AI Office</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="live.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/" title="Về văn phòng 3D">AI&nbsp;Office <span>Live</span></a>
+    <div class="task" id="task">Chưa có việc nào</div>
+    <div class="phase" id="phase">Đang rảnh</div>
+    <div class="stats"><span id="round"></span><span id="clock"></span><span id="cost"></span></div>
+    <button id="stopBtn" class="ghost" hidden>Dừng</button>
+  </header>
+
+  <div id="stale" class="stale-bar" hidden>⚠️ AI Office đang chạy <b>bản cũ</b>, chưa có phần xem trực tiếp. Đóng cửa sổ đen của AI Office rồi nhấp đúp <b>AI-Office-3D.bat</b> để mở bản mới.</div>
+  <div id="now" class="now" hidden></div>
+
+  <main class="grid">
+    <section class="preview-col">
+      <div class="frame-bar">
+        <span class="url" id="url">Chưa có trang để xem</span>
+        <span class="reloaded" id="reloaded"></span>
+        <div class="seg" role="group" aria-label="Cỡ màn hình">
+          <button data-size="full" class="on">Máy tính</button>
+          <button data-size="phone">Điện thoại</button>
+        </div>
+        <button id="reloadBtn" title="Tải lại trang">↻</button>
+        <a id="openBtn" class="btn" target="_blank" rel="noopener" hidden>Mở tab mới ↗</a>
+      </div>
+      <div class="frame-wrap" id="frameWrap">
+        <iframe id="frame" title="Trang web đang được tạo" sandbox="allow-scripts allow-forms allow-modals allow-same-origin" hidden></iframe>
+        <div class="frame-empty" id="frameEmpty">
+          <b>Chưa có trang web nào</b>
+          <span id="frameEmptyText">Giao việc ở <a href="/">văn phòng 3D</a>. Trang này sẽ tự cập nhật khi đội bắt đầu viết file.</span>
+        </div>
+      </div>
+
+      <div class="code">
+        <div class="code-bar">
+          <b id="codeName">Chưa có file</b>
+          <span id="codeInfo"></span>
+          <button id="followBtn" class="small" hidden>Theo dõi file mới</button>
+        </div>
+        <pre id="codeView" class="code-view"></pre>
+      </div>
+    </section>
+
+    <aside class="side">
+      <section class="card">
+        <h2>Quy trình</h2>
+        <ol id="steps" class="steps"></ol>
+      </section>
+
+      <section id="approval" class="card approval" hidden>
+        <h2>Cậu duyệt nhé</h2>
+        <p id="approvalText"></p>
+        <div class="row">
+          <button id="approveYes" class="ok">Đồng ý</button>
+          <button id="approveNo" class="ghost">Giữ trên máy</button>
+        </div>
+      </section>
+
+      <section id="result" class="card result" hidden></section>
+
+      <section class="card">
+        <h2>File <small id="fileCount"></small></h2>
+        <ul id="files" class="files"></ul>
+      </section>
+
+      <section class="card grow">
+        <h2>Diễn biến <small>bấm vào dòng ghi file để xem lại bản lúc đó</small></h2>
+        <ol id="feed" class="feed"></ol>
+      </section>
+    </aside>
+  </main>
+
+  <script src="live.js"></script>
+</body>
+</html>

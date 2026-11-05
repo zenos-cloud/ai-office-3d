@@ -1,0 +1,14 @@
+{
+  "name": "ai-office-3d",
+  "version": "1.0.0",
+  "description": "Văn phòng 3D với 7 nhân viên AI (Claude Code) cùng làm một dự án",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "ws": "^8.18.0"
+  }
+}

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Office 3D</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <main id="stage">
+    <div class="hud">
+      <div class="brand">AI&nbsp;Office <span>3D</span></div>
+      <div id="phase" class="phase">Đang rảnh</div>
+      <button id="resetView" class="chip" title="Nhìn toàn bộ văn phòng">🔭 Toàn cảnh</button>
+      <button id="openRoot" class="chip" title="Mở thư mục chứa mọi dự án">📁 Kho dự án</button>
+      <a id="liveLink" class="chip" href="/live.html" target="ai-office-live" title="Xem trang web đang được tạo">📺 Xem trực tiếp</a>
+      <div id="cost" class="cost"></div>
+    </div>
+    <div id="agentCard" class="agent-card" hidden></div>
+    <div class="hint">Kéo chuột để xoay · Cuộn để phóng to · Bấm vào nhân viên để xem chi tiết</div>
+  </main>
+
+  <aside id="panel">
+    <p id="staleWarn" class="demo-warn stale" hidden>⚠️ AI Office đang chạy <b>bản cũ</b> nên Xem trực tiếp sẽ trống. Đóng cửa sổ đen của AI Office rồi nhấp đúp <b>AI-Office-3D.bat</b> để mở bản mới.</p>
+    <section class="box">
+      <h2>Giao việc cho các phòng ban</h2>
+      <label class="pick" for="projectPick">Làm cho
+        <select id="projectPick"><option value="">🆕 Dự án mới</option></select>
+      </label>
+      <p id="contNote" class="cont-note" hidden></p>
+      <textarea id="task" rows="4" placeholder="Ví dụ: Làm trang web máy tính bỏ túi có cộng, trừ, nhân, chia và có test"></textarea>
+      <div class="attach">
+        <label class="attach-btn"><input type="file" id="imgInput" accept="image/png,image/jpeg,image/webp,image/gif" multiple hidden>📎 Đính kèm ảnh</label>
+        <span class="attach-hint">hoặc dán (Ctrl+V), kéo thả ảnh vào ô trên</span>
+      </div>
+      <div id="thumbs" class="thumbs"></div>
+      <p id="attachErr" class="attach-err" hidden></p>
+      <label class="check"><input type="checkbox" id="demo"> Chế độ demo (không dùng AI thật, không tốn lượt)</label>
+      <p id="demoWarn" class="demo-warn">⚠️ Đang bật demo: đội chỉ diễn thử theo kịch bản có sẵn, <b>không làm theo yêu cầu của cậu</b>. Bỏ tick để AI làm thật (≈ $0.25–1 mỗi việc).</p>
+      <label class="check"><input type="checkbox" id="autoLive" checked> Tự mở trang Xem trực tiếp khi giao việc</label>
+      <div class="row">
+        <button id="startBtn" class="primary">Giao việc</button>
+        <button id="stopBtn" class="ghost" disabled>Dừng</button>
+      </div>
+    </section>
+
+    <section id="approval" class="box approval" hidden></section>
+    <section id="result" class="box result" hidden></section>
+
+    <nav class="tabs">
+      <button data-tab="log" class="on">Nhật ký</button>
+      <button data-tab="board">Bảng việc</button>
+      <button data-tab="team">Phòng ban</button>
+      <button data-tab="projects">Dự án</button>
+    </nav>
+    <section id="tab-log" class="tab on"><ol id="log" class="log"></ol></section>
+    <section id="tab-board" class="tab"><div id="board" class="board"></div></section>
+    <section id="tab-team" class="tab"><div id="team" class="team"></div></section>
+    <section id="tab-projects" class="tab">
+      <div id="projectsDir" class="projects-dir"></div>
+      <div id="projects" class="projects"></div>
+      <pre id="logView" class="log-view"></pre>
+    </section>
+  </aside>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
