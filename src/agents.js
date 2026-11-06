@@ -34,7 +34,7 @@ export const AGENTS = [
     id: 'qa', role: 'Người kiểm tra', dept: 'Phòng Kiểm thử', emoji: '🔍', color: '#ef4444',
     model: 'opus',
     tools: ['Read', 'Write', 'Glob', 'Grep', 'Bash'],
-    allowed: ['Read', 'Write', 'Glob', 'Grep', 'Bash(node *)', 'Bash(npm test*)', 'Bash(mkdir *)', 'Bash(ls *)'],
+    allowed: ['Read', 'Write', 'Glob', 'Grep', 'Bash(node *)', 'Bash(npm test*)', 'Bash(npm install*)', 'Bash(mkdir *)', 'Bash(ls *)'],
     persona: 'Khó tính, hay soi lỗi, nhưng công bằng. Bạn chỉ cho qua khi code đúng yêu cầu và có test.',
   },
   {

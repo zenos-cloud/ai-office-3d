@@ -76,15 +76,15 @@ Cách làm:
 const MAX_ROUNDS = 3;
 
 const INSTR = {
-  pm: `Đọc yêu cầu của sếp và chia thành 3–7 việc nhỏ. Mỗi việc giao cho đúng một người: architect, designer, coder, qa hoặc runner.
+  pm: `Đọc yêu cầu của sếp và chia thành 3–7 việc nhỏ. Mỗi việc giao cho đúng một người: architect, designer, coder hoặc qa (qa vừa kiểm tra vừa chạy thử).
 Chỉ giao việc cho designer (Phòng Thiết kế UI) khi dự án có giao diện người dùng (trang web, app có màn hình). Thư viện hay công cụ dòng lệnh thì không cần.
 Không viết code. Trả lời CHỈ bằng một khối:
 \`\`\`json
 {"summary":"tóm tắt 1 câu","hasUI":true,"tasks":[{"title":"tên việc ngắn","owner":"coder"}]}
 \`\`\``,
-  designerContinue: `Đọc DESIGN.md, UI.md và styles/tokens.css đang có. Nếu yêu cầu mới cần thêm hoặc đổi giao diện thì cập nhật UI.md (và tokens.css nếu cần), giữ phong cách cũ trừ khi sếp yêu cầu đổi. Nếu không cần đổi gì thì không sửa file.
+  designerContinue: `Đọc UI.md, styles/tokens.css và code đang có (Phòng Kiến trúc đang cập nhật DESIGN.md cùng lúc). Nếu yêu cầu mới cần thêm hoặc đổi giao diện thì cập nhật UI.md (và tokens.css nếu cần), giữ phong cách cũ trừ khi sếp yêu cầu đổi. Nếu không cần đổi gì thì không sửa file.
 Không viết HTML hay JavaScript. Báo cáo cuối dưới 80 từ.`,
-  designer: `Đọc DESIGN.md rồi viết file UI.md: bản thiết kế giao diện để Phòng Lập trình làm theo. Gồm:
+  designer: `Bạn làm cùng lúc với Phòng Kiến trúc nên DESIGN.md có thể chưa có. Dựa vào yêu cầu của sếp (và ảnh tham khảo nếu có) để viết file UI.md: bản thiết kế giao diện để Phòng Lập trình làm theo. Gồm:
 - Phong cách tổng thể (1–2 câu, có cá tính, không chung chung).
 - Bảng màu: mã hex cho nền, chữ, màu nhấn, viền, màu báo thành công/lỗi. Bảo đảm độ tương phản đủ đọc.
 - Font chữ (ưu tiên font hệ thống hoặc Google Fonts), cỡ chữ cho tiêu đề, nội dung, chú thích.
@@ -99,12 +99,16 @@ Không viết HTML hay JavaScript. Báo cáo cuối dưới 80 từ.`,
 Không viết code chính. Báo cáo cuối dưới 80 từ.`,
   architect: `Viết file DESIGN.md gồm: mục tiêu, cấu trúc thư mục, công nghệ (ưu tiên HTML/CSS/JS thuần hoặc Node.js), các chức năng chính, cách chạy và cách test (test đặt trong thư mục tests/, package.json có script "test": "node --test").
 Không viết code chính. Báo cáo cuối dưới 80 từ.`,
-  coder: (round, feedback, cont = false) => `${round > 1 ? `Đây là vòng sửa thứ ${round}. Phản hồi từ các phòng:\n${feedback}\n\nHãy sửa đúng các lỗi trên.` : cont ? 'Đây là dự án cũ. Đọc DESIGN.md (nhất là mục "Thay đổi" mới nhất) và code đang có, rồi thêm/sửa code cho đúng yêu cầu mới. Sửa file có sẵn thay vì viết lại từ đầu. Nếu có UI.md thì làm giao diện đúng theo UI.md.' : 'Đọc DESIGN.md và viết code hoàn chỉnh theo thiết kế. Nếu có UI.md thì làm giao diện đúng theo UI.md và dùng biến CSS trong styles/tokens.css.'}
+  coder: (round, feedback, cont = false) => `${round > 1 ? `Đây là vòng sửa thứ ${round}. Phản hồi từ các phòng:\n${feedback}\n\nHãy sửa đúng các lỗi trên.` : cont ? 'Đây là dự án cũ. Đọc DESIGN.md (nhất là mục "Thay đổi" mới nhất) và code đang có, rồi thêm/sửa code cho đúng yêu cầu mới. Sửa file có sẵn thay vì viết lại từ đầu. Nếu có UI.md thì làm giao diện đúng theo UI.md.' : 'Đọc DESIGN.md và viết code hoàn chỉnh theo thiết kế. Nếu có UI.md thì làm giao diện đúng theo UI.md và dùng biến CSS trong styles/tokens.css. Nếu DESIGN.md và UI.md lệch nhau về chức năng thì theo DESIGN.md, về giao diện thì theo UI.md.'}
 Nếu dùng package.json thì phải có script "test": "node --test". Bạn có thể chạy node/npm để thử. Không viết test (đó là việc của Phòng Kiểm thử).
 Báo cáo cuối dưới 80 từ: đã tạo/sửa những file nào.`,
   qa: `Review code so với DESIGN.md và yêu cầu của sếp. Nếu có UI.md thì kiểm tra thêm giao diện có làm đúng UI.md không (màu, bố cục, trạng thái, điện thoại, nhãn cho ô nhập). Viết hoặc cập nhật test trong thư mục tests/ (dùng node:test và node:assert).
-KHÔNG sửa file nào ngoài thư mục tests/. Chạy test nếu được.
-Báo cáo ngắn gọn, liệt kê lỗi cụ thể nếu có. Dòng cuối cùng phải là đúng "VERDICT: PASS" hoặc "VERDICT: FAIL".`,
+Sau đó tự chạy thử (bạn kiêm luôn việc của Phòng Vận hành):
+- Nếu package.json có dependencies thì chạy "npm install".
+- Chạy "npm test".
+- Kiểm tra cú pháp các file .js bằng "node --check <file>".
+Không chạy server chạy mãi không dừng. KHÔNG sửa file nào ngoài thư mục tests/.
+Báo cáo ngắn gọn, liệt kê lỗi cụ thể và dán đoạn lỗi nếu có. Dòng cuối cùng phải là đúng "VERDICT: PASS" hoặc "VERDICT: FAIL".`,
   runner: `Chạy thử dự án: nếu có package.json thì chạy "npm install" (khi có dependencies) và "npm test"; kiểm tra cú pháp các file .js bằng "node --check <file>".
 Không chạy server chạy mãi không dừng. KHÔNG sửa file nào. Báo kết quả thật, dán đoạn lỗi nếu có.
 Dòng cuối cùng phải là đúng "VERDICT: PASS" hoặc "VERDICT: FAIL".`,
@@ -394,37 +398,40 @@ export class Office extends EventEmitter {
     this.log('pm', 'Triệu tập họp các phòng');
     const planText = await this.runAgent('pm', INSTR.pm);
     const plan = parseJson(planText);
-    const owners = ['architect', 'designer', 'coder', 'qa', 'runner'];
+    const owners = ['architect', 'designer', 'coder', 'qa'];
     const tasks = Array.isArray(plan?.tasks) && plan.tasks.length ? plan.tasks : [{ title: this.state.task, owner: 'coder' }];
     const hasUI = typeof plan?.hasUI === 'boolean'
       ? plan.hasUI || tasks.some((t) => t.owner === 'designer')
       : /web|trang|giao diện|html|css|\bui\b|ứng dụng|app|màn hình|game/i.test(this.state.task)
         || (cont && fs.existsSync(path.join(this.state.dir, 'UI.md')));
     this.setKanban(tasks.slice(0, 8).map((t, i) => ({
-      id: i, title: short(t.title, 60), owner: owners.includes(t.owner) ? t.owner : 'coder', col: 'todo',
+      id: i, title: short(t.title, 60), owner: t.owner === 'runner' ? 'qa' : owners.includes(t.owner) ? t.owner : 'coder', col: 'todo',
     })));
     this.log('pm', 'Chia việc', (plan?.summary ? plan.summary + ' · ' : '') + tasks.map((t) => `${t.title} → ${byId(t.owner)?.dept || t.owner}`).join('; '));
-    await new Promise((r) => setTimeout(r, 7000)); // đủ thời gian để mọi người đi tới và ngồi họp
     this.setPhase('work');
 
-    // 2. Thiết kế
-    this.moveCards((c) => c.owner === 'architect', 'doing');
-    const design = await this.runAgent('architect', (cont ? INSTR.architectContinue : INSTR.architect) + (this.state.images.length ? `
-Có ảnh tham khảo: trong DESIGN.md thêm mục "Ảnh tham khảo" gồm: mô tả từng ảnh, chép lại chữ trong ảnh kèm bản dịch tiếng Việt, và danh sách yêu cầu rút ra từ ảnh để các phòng sau làm theo.` : ''));
-    this.log('architect', cont ? 'Cập nhật thiết kế cho yêu cầu mới' : 'Hoàn thành thiết kế', design);
-    this.moveCards((c) => c.owner === 'architect', 'done');
-
-    // 2b. Thiết kế giao diện (chỉ khi dự án có giao diện)
-    if (hasUI) {
+    // 2. Thiết kế: Kiến trúc và Thiết kế UI làm cùng lúc
+    const imgNote = this.state.images.length ? `
+Có ảnh tham khảo: trong DESIGN.md thêm mục "Ảnh tham khảo" gồm: mô tả từng ảnh, chép lại chữ trong ảnh kèm bản dịch tiếng Việt, và danh sách yêu cầu rút ra từ ảnh để các phòng sau làm theo.` : '';
+    const designJob = async () => {
+      this.moveCards((c) => c.owner === 'architect', 'doing');
+      const design = await this.runAgent('architect', (cont ? INSTR.architectContinue : INSTR.architect) + imgNote);
+      this.log('architect', cont ? 'Cập nhật thiết kế cho yêu cầu mới' : 'Hoàn thành thiết kế', design);
+      this.moveCards((c) => c.owner === 'architect', 'done');
+    };
+    const uiJob = async () => {
+      if (!hasUI) return this.log('designer', 'Dự án không có giao diện, Phòng Thiết kế UI không cần tham gia');
       this.moveCards((c) => c.owner === 'designer', 'doing');
       const ui = await this.runAgent('designer', cont ? INSTR.designerContinue : INSTR.designer);
       this.log('designer', 'Hoàn thành thiết kế giao diện (UI.md)', ui);
       this.moveCards((c) => c.owner === 'designer', 'done');
-    } else {
-      this.log('designer', 'Dự án không có giao diện, Phòng Thiết kế UI không cần tham gia');
-    }
+    };
+    // Chờ cả hai xong (kể cả khi một bên lỗi) rồi mới báo lỗi, để không bỏ sót nhân viên đang chạy
+    const parts = await Promise.allSettled([designJob(), uiJob()]);
+    const failed = parts.find((r) => r.status === 'rejected');
+    if (failed) throw failed.reason;
 
-    // 3. Vòng lặp: Code → Kiểm tra → Chạy thử
+    // 3. Vòng lặp: Code → Kiểm tra và chạy thử (Phòng Kiểm thử làm cả hai)
     let feedback = '';
     for (let round = 1; round <= MAX_ROUNDS; round++) {
       this.state.round = round;
@@ -440,17 +447,7 @@ Có ảnh tham khảo: trong DESIGN.md thêm mục "Ảnh tham khảo" gồm: m�
         feedback = 'Phòng Kiểm thử báo:\n' + qa.slice(0, 3000);
         continue;
       }
-      this.log('qa', '✅ Review đạt', qa);
-      this.moveCards((c) => c.owner === 'qa', 'done');
-
-      this.moveCards((c) => c.owner === 'runner', 'doing');
-      const run = await this.runAgent('runner', INSTR.runner);
-      if (!verdict(run)) {
-        this.log('runner', `❌ Chạy lỗi, trả lại Phòng Lập trình (vòng ${round})`, run);
-        feedback = 'Phòng Vận hành báo:\n' + run.slice(0, 3000);
-        continue;
-      }
-      this.log('runner', '✅ Chạy thành công', run);
+      this.log('qa', '✅ Review và chạy thử đều đạt', qa);
       this.state.passed = true;
       break;
     }

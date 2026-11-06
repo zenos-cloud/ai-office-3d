@@ -31,7 +31,7 @@ npm start
 | 🎨 Phòng Thiết kế UI | Nhà thiết kế UI: viết UI.md + styles/tokens.css (chỉ khi dự án có giao diện) | sonnet | đọc, ghi |
 | 💻 Phòng Lập trình | Lập trình viên: viết code | sonnet | đọc, ghi, sửa, `node`/`npm` |
 | 🔍 Phòng Kiểm thử | Người kiểm tra: review, viết test | opus | đọc, ghi test, `node`/`npm test` |
-| ▶️ Phòng Vận hành | Người chạy code | haiku | đọc, `node`/`npm` (không sửa file) |
+| ▶️ Phòng Vận hành | Người chạy code (hiện đã gộp vào Phòng Kiểm thử) | haiku | đọc, `node`/`npm` (không sửa file) |
 | 🐙 Phòng GitHub | Quản lý GitHub | haiku | đọc, ghi, `git` |
 | 📝 Phòng Hành chính | Thư ký: viết WORKLOG.md | haiku | đọc, ghi |
 
@@ -44,9 +44,9 @@ Trong văn phòng 3D:
 ## Quy trình
 
 1. **Họp**: mọi người đi ra phòng họp chung, Trưởng phòng chia việc, Kanban hiện lên bảng trên tường.
-2. **Kiến trúc**: Kiến trúc sư viết `DESIGN.md`.
+2. **Kiến trúc** (cùng lúc với Thiết kế giao diện): Kiến trúc sư viết `DESIGN.md`.
 3. **Thiết kế giao diện** (chỉ khi có giao diện): Nhà thiết kế UI viết `UI.md` (màu, font, bố cục, trạng thái, điện thoại) và `styles/tokens.css`. Phòng Lập trình làm theo, Phòng Kiểm thử soát lại.
-4. **Code → Kiểm tra → Chạy thử**: nếu Phòng Kiểm thử hoặc Phòng Vận hành báo lỗi, việc được trả lại cho Phòng Lập trình (tối đa 3 vòng).
+4. **Code → Kiểm tra và chạy thử**: Phòng Kiểm thử vừa review, viết test vừa chạy thử. Nếu báo lỗi, việc được trả lại cho Phòng Lập trình (tối đa 3 vòng).
 5. **Thư ký** viết `WORKLOG.md` vào dự án.
 6. **Kết quả**: ô bên phải hiện thư mục lưu dự án, kèm nút 📂 Mở thư mục. Đội dừng ở đây, không tự commit hay push.
 

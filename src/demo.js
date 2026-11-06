@@ -71,7 +71,7 @@ function script(id, ctx) {
             { title: 'Viết giao diện HTML/CSS', owner: 'coder' },
             { title: 'Viết logic thêm/xoá việc', owner: 'coder' },
             { title: 'Viết test và review code', owner: 'qa' },
-            { title: 'Chạy thử toàn bộ', owner: 'runner' },
+            { title: 'Chạy thử toàn bộ', owner: 'qa' },
           ],
         }) + '\n```',
       };
@@ -121,8 +121,8 @@ function script(id, ctx) {
         };
       }
       return {
-        steps: [tool('Bash', { command: 'npm test' }), ok('# pass 2\n# fail 0'), say('2/2 test pass. Cho qua!')],
-        final: 'Code đúng yêu cầu, 2/2 test pass.\nVERDICT: PASS',
+        steps: [tool('Bash', { command: 'node --check app.js' }), ok(), tool('Bash', { command: 'npm test' }), ok('# pass 2\n# fail 0'), say('Cú pháp ổn, 2/2 test pass. Cho qua!')],
+        final: 'Code đúng yêu cầu, node --check ổn, 2/2 test pass.\nVERDICT: PASS',
       };
     case 'runner':
       return {
